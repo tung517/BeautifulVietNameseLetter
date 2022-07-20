@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <script src="/static/js/jquery-3.6.0.min.js"></script>
+        <style>
+            @font-face {
+                font-family: HP001-Normal;
+                src: url(/static/font/HP001N30.ttf);
+            }
+            @font-face {
+                font-family: HP001-Bold;
+                src: url(/static/font/HP001B30.ttf);
+            }
+        </style>
+        <script>
+            //utils
+            function stripHtml(str){
+                return str.replace(/(<([^>]+)>)/gi, "");
+            }
+            const decodeHTMLEntities = text => {
+                // Create a new element or use one from cache, to save some element creation overhead
+                const el = decodeHTMLEntities.__cache_data_element 
+                        = decodeHTMLEntities.__cache_data_element 
+                        || document.createElement('div');
+                
+                const enc = text
+                    // Prevent any mixup of existing pattern in text
+                    .replace(/⪪/g, '⪪#')
+                    // Encode entities in special format. This will prevent native element encoder to replace any amp characters
+                    .replace(/&([a-z1-8]{2,31}|#x[0-9a-f]+|#\d+);/gi, '⪪$1⪫');
+
+                // Encode any HTML tags in the text to prevent script injection
+                el.textContent = enc;
+
+                // Decode entities from special format, back to their original HTML entities format
+                el.innerHTML = el.innerHTML
+                    .replace(/⪪([a-z1-8]{2,31}|#x[0-9a-f]+|#\d+)⪫/gi, '&$1;')
+                    .replace(/#⪫/g, '⪫');
+            
+                // Get the decoded HTML entities
+                const dec = el.textContent;
+                
+                // Clear the element content, in order to preserve a bit of memory (it is just the text may be pretty big)
+                el.textContent = '';
+
+                return dec;
+            }
+        </script>
+    </head>
+    <body>
+        <h1 id="container" style="font-family: HP001-Bold; display: none;" contenteditable="true">Hoàng nè, Ύɐ</h1>
+        <h1 id="input" style="font-family: HP001-Bold;border: 2pt black; min-width: 100px;" contenteditable="true" ></h1>
+        <h1 id="result"></h1>
+        <script>
+            var $input = $('#input');
+            var $result = $('#result');
+            $input.on('keyup',function(e){
+                let result = $input.text().split('').map(char => char.charCodeAt(0)).join(' ')
+                $result.html(result)
+            })
+        </script>
+        <script>
+            var $node = $('#container'), 
+            text = $.trim($node.text()),
+            characters = text.split('');
+
+            text = '<span>' + characters.join('</span><span>') + '</span>';
+            $node.html(text).on('click', 'span', function(e) {
+                // abort on empty node
+                if (this.innerHTML == ' ') {
+                    return;
+                }
+                console.log(this.innerHTML.charCodeAt(0).toString(16));
+                // this.innerHTML = this.innerHTML == '1' ? '0' : '1';
+            });
+            $node.on('onfocus', function(e){
+                
+            })
+            $node.focusout(function(e){
+                let $node = $('#container');
+                let text = $.trim(stripHtml($node.html()));
+                text = decodeHTMLEntities(text)
+                let characters = text.split('');
+                text = '<span>' + characters.join('</span><span>') + '</span>';
+                this.innerHTML = text;
+            })
+        </script>
+        <script>
+            $('.input').on('change', function(e){
+                let $this = $(this)
+                let word = $this.val();
+                for (const char of word) {
+                    
+                }
+            })
+            
+            // funtion getUnicodeStr(word)
+        </script>
+    </body>
+</html>
