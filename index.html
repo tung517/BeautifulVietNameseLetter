@@ -42,7 +42,7 @@
   </head>
   <body>
     <div id="logo" class="logo">
-      <img src="./static//img/main-logo.png" />
+      <img src="./static/img/main-logo.png" />
     </div>
     <div id="rulesformitem" class="formitem">
       <div class="textwrapper">
@@ -50,7 +50,7 @@
       </div>
       <div id="option" class="option">
         <div>
-          <form id="font-size-form" class="font-size-form">
+          <form id="font-size-form" class="font-size-form" onsubmit="return false">
             <label id="font-size-label" class="font-size-label">Cỡ chữ</label>
             <input type="text" id="font-size-input" class="font-size-input" onchange="view.changeFontSizeInput()"/>
             <select id="font-size-select" class="font-size-select" onchange="view.changeFontSizeSelect()">
@@ -66,6 +66,7 @@
               <option value="65">65</option>
               <option value="70">70</option>
             </select>
+            <input type="submit" hidden>
           </form>
 
           <form id="font-color-form" class="font-color-form">
@@ -74,6 +75,8 @@
               type="color"
               id="font-color-input"
               class="font-color-input"
+              value="#000"
+              onchange="view.changeColorText()"
             />
           </form>
         </div>

@@ -16,7 +16,7 @@ view.addHandler = function () {
             return result.join(' ');
         });
 
-        $result.html("<p style=\"float:left;\">" + linesResult.join("</p><p>") + "</p>")
+        $result.html("<p style=\"\">" + linesResult.join("</p><p>") + "</p>")
     })
 }
 
@@ -40,4 +40,14 @@ view.changeFontSizeSelect = function () {
     input.css("font-size", fontSizeSelect + "pt");
     result.css("font-size", fontSizeSelect + "pt");
     fontSizeInput.val("" + fontSizeSelect);
+}
+
+view.changeColorText = function(){
+    var colorValue = document.getElementById("font-color-input");
+    var input = document.getElementById("input");
+    var result = document.getElementById("result");
+
+    input.style.color = colorValue.value;
+    result.style.color = colorValue.value;
+
 }
